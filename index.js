@@ -19,6 +19,7 @@ fs.readdir(client.config.commandDir, (err, files) => {
         let props = require(path.join(client.config.commandDir, file));
         let commandName = props.info.name;
         client.commands.set(commandName, props);
+        console.log(`${file} loaded`);
     });
 });
 
@@ -26,6 +27,7 @@ client.on('error', error => console.log(error));
 
 client.on('ready', () => {
     client.user.setActivity('the coronavirus outbreak | ,corona help for help', {type: 'WATCHING'});
+    console.log('Client logged in!');
 });
 
 client.on('message', async message => {

@@ -39,14 +39,11 @@ client.on('message', async message => {
     let prefix = client.config.prefix;
     let messageArray = message.content.split(' ');
     let cmd = messageArray[1];
-    let args = messageArray.splice(1);
+    let args = messageArray.splice(2);
     let commandFile = client.commands.get(cmd);
     if (!commandFile) return;
-
-    if (cmd.slice(0, client.config.prefix.length) === client.config.prefix) {
-        await commandFile.run(client, message, args)
-            .catch((err) => console.log(err));
-    }
+    await commandFile.run(client, message, args)
+        .catch((err) => console.log(err));
 })
 
 client.login(config.token)

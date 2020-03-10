@@ -24,3 +24,6 @@ fs.readdir(client.config.commandDir, (err, files) => {
 
 client.on('error', error => console.log(error));
 
+client.on('ready', () => {
+    client.user.setActivity('the coronavirus outbreak | ,corona help for help', {type: 'WATCHING'});
+});

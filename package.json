@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Peperman66/Discord-COVID-19-tracker/issues"
   },
-  "homepage": "https://github.com/Peperman66/Discord-COVID-19-tracker#readme"
+  "homepage": "https://github.com/Peperman66/Discord-COVID-19-tracker#readme",
+  "dependencies": {
+    "discord.js": "^12.0.2"
+  }
 }

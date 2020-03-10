@@ -21,3 +21,6 @@ fs.readdir(client.config.commandDir, (err, files) => {
         client.commands.set(commandName, props);
     });
 });
+
+client.on('error', error => console.log(error));
+

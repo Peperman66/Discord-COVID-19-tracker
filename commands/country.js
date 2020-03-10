@@ -3,9 +3,9 @@ const https = require('https');
 
 module.exports.run = async (client, message, args) => {
     if (args.length != 1) return message.reply(`Usage: ${client.config.prefix}country <country code>`);
-    https.get('https://corona.lmao.ninja', {}, res => {
-        let data = '';
 
+    https.get('https://corona.lmao.ninja/countries', {}, res => {
+        let data = '';
         res.on('data', chunk => {
             data += chunk;
         });

@@ -20,12 +20,12 @@ module.exports.run = async (client, message, args) => {
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Coronavirus outbreak in ${args[0]}`)
                 .setTimestamp(Date.now())
-                .addField('Total cases', dataCountry.cases, true)
-                .addField('Today\'s cases', dataCountry.todayCases, true)
-                .addField('Recovered', dataCountry.recovered)
-                .addField('Critical', dataCountry.critical)
-                .addField('Deaths', dataCountry.deaths, true)
-                .addField('Today\'s deaths', dataCountry.todayDeaths, true);
+                .addField('Total cases', dataCountry[0].cases, true)
+                .addField('Today\'s cases', dataCountry[0].todayCases, true)
+                .addField('Recovered', dataCountry[0].recovered)
+                .addField('Critical', dataCountry[0].critical)
+                .addField('Deaths', dataCountry[0].deaths, true)
+                .addField('Today\'s deaths', dataCountry[0].todayDeaths, true);
             message.channel.send(embed);
         });
     });

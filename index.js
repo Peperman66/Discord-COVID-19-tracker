@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const http = require('http');
 
 const client = new Discord.Client();
 const config = require('./config.json');
@@ -47,3 +48,9 @@ client.on('message', async message => {
 })
 
 client.login(config.token)
+
+//Http server for anti-sleep function
+http.createServer(function(req, res) {
+    res.writeHead(204);
+    res.end();
+}).listen(client.config.httpPort)

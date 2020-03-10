@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const https = require('https');
 
 module.exports.run = async (client, message, args) => {
-    if (args.length != 1) return message.reply(`Usage: ${client.config.prefix}country <country code>`);
+    if (args.length != 1) return message.reply(`Usage: \`\`${client.config.prefix}country <country code>\`\``);
 
     let tempMessage = await message.channel.send('Requesting data...');
 

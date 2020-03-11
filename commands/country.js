@@ -21,7 +21,14 @@ module.exports.run = async (client, message, args) => {
         res.on('end', () => {
             tempMessage.edit('Data retrieved!')
                 .then(newMessage => newMessage.delete({ timeout: 1000 }));
-            let dataJSON = JSON.parse(data);
+                let dataJSON;
+            try {
+                dataJSON = JSON.parse(data);
+            } catch (err) {
+                tempMessage.edit('Something went wrong. Please try again later.');
+                console.log(err);
+                return;
+            }
             let dataCountry = dataJSON.filter(obj => {
                 return obj.country === args[0];
             });
@@ -41,7 +48,7 @@ module.exports.run = async (client, message, args) => {
 
         res.on('error', (err) => {
             console.log(err);
-            tempMessage.edit('Something went wrong. Please try again in a few minutes.');
+            tempMessage.edit('Something went wrong. Please try again later.');
         })
     });
 }

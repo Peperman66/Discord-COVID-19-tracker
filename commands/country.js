@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
             let dataCountry = dataJSON.filter(obj => {
                 return obj.country === args[0];
             });
-            if (dataCountry.length === 0) return message.reply(`Country code is invalid. For list of country codes, use \`\`${client.config.prefix}countrycodes\`\``);
+            if (dataCountry.length === 0) return tempMessage.edit(`Country code is invalid. For list of country codes, use \`\`${client.config.prefix}countrycodes\`\``);
 
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Coronavirus outbreak in ${args[0]}`)

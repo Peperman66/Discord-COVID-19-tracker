@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
 
         res.on('end', () => {
             tempMessage.edit('Data retrieved!')
-                .then(newMessage => newMessage.delete({ timeout: 1000 }));
+                .then(newMessage => tempMessage = newMessage);
                 let dataJSON;
             try {
                 dataJSON = JSON.parse(data);
@@ -44,6 +44,7 @@ module.exports.run = async (client, message, args) => {
                 .addField('Deaths', dataCountry[0].deaths, true)
                 .addField('Today\'s deaths', dataCountry[0].todayDeaths, true);
             message.channel.send(embed);
+            tempMessage.delete({timeout: 5000});
         });
 
         res.on('error', (err) => {

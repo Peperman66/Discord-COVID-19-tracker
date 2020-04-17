@@ -2,11 +2,12 @@ const Discord = require('discord.js');
 const https = require('https');
 
 module.exports.run = async (client, message, args) => {
-    if (args.length != 1) return message.reply(`Usage: \`\`${client.config.prefix}country <country code>\`\``);
+    if (args.length < 1) return message.reply(`Usage: \`\`${client.config.prefix}country <country code>\`\``);
+    let countryString = args.join(" ");
 
     let tempMessage = await message.channel.send('Requesting data...');
 
-    https.get('https://corona.lmao.ninja/countries', {}, res => {
+    https.get('https://corona.lmao.ninja/v2/countries', {}, res => {
         let data = '';
         let dataRetrieving = false
         res.on('data', chunk => {
@@ -30,19 +31,26 @@ module.exports.run = async (client, message, args) => {
                 return;
             }
             let dataCountry = dataJSON.filter(obj => {
-                return obj.country === args[0];
+                return obj.country.toLowerCase() === countryString.toLowerCase();
             });
             if (dataCountry.length === 0) return tempMessage.edit(`Country code is invalid. For list of country codes, use \`\`${client.config.prefix}countrycodes\`\``);
-
+            dataCountry = dataCountry[0]
             let embed = new Discord.MessageEmbed()
-                .setTitle(`Coronavirus outbreak in ${args[0]}`)
-                .setTimestamp(Date.now())
-                .addField('Total cases', dataCountry[0].cases, true)
-                .addField('Today\'s cases', dataCountry[0].todayCases, true)
-                .addField('Recovered', dataCountry[0].recovered)
-                .addField('Critical', dataCountry[0].critical)
-                .addField('Deaths', dataCountry[0].deaths, true)
-                .addField('Today\'s deaths', dataCountry[0].todayDeaths, true);
+                .setTitle(`Coronavirus outbreak in ${dataCountry.country} (${dataCountry.countryInfo.iso3})`)
+                .setThumbnail(dataCountry.countryInfo.flag)
+                .addField('Total cases', dataCountry.cases, true)
+                .addField('Today\'s cases', dataCountry.todayCases, true)
+                .addField('Cases per one million', dataCountry.casesPerOneMillion, true)
+                .addField('Recovered', dataCountry.recovered)
+                .addField('Critical', dataCountry.critical)
+                .addField('Deaths', dataCountry.deaths, true)
+                .addField('Today\'s deaths', dataCountry.todayDeaths, true)
+                .addField('Deaths per one million', dataCountry.deathsPerOneMillion, true)
+                .addField('Active', dataCountry.active)
+                .addField('Tests', dataCountry.tests, true)
+                .addField('Tests per one million', dataCountry.testsPerOneMillion, true)
+                .setFooter('Last updated')
+                .setTimestamp(dataCountry.updated);
             message.channel.send(embed);
             tempMessage.delete({timeout: 5000});
         });
